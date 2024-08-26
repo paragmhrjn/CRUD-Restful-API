@@ -19,6 +19,22 @@ app.get("/api/products", async (req, res) => {
             }
 });
 
+// update a product
+app.put("/api/product/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const product = await Product.findByIdAndUpdate(id, req.body, { new: true });
+
+        const updateProduct = await Product.findById(id);
+        res.status(200).json(updateProduct);
+
+
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+});
+
+// to read particular items
 app.get ("/api/product/:id", async (req, res) => {
     try{
         const id = req.params.id;
@@ -31,6 +47,8 @@ app.get ("/api/product/:id", async (req, res) => {
                 res.status(500).json({ message: error.message });
                 }
 })
+
+
 
 app.post("/api/products",async (req, res) => {
     // to setup data to be stored
